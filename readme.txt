@@ -1,0 +1,1 @@
+The music player based on angularJS,It use ID3 to recognition MP3 file, backstage function is not perfect, I will continue to update it

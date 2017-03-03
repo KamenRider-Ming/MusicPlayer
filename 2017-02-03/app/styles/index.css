@@ -1,0 +1,39 @@
+*{
+	padding:0;
+	margin:0;
+}
+
+body{
+	background-color: #282828;
+	position:relative;
+	height: 100%;
+	font-family: "微软雅黑";
+}
+
+.fl{
+	float:left;
+}
+
+.fr{
+	float:right;
+}
+
+.clearfix:after{
+	clear:both;
+	display: table;
+	content:'';
+}
+
+
+.music-view{
+	width:320px;
+	height: 568px;
+	background-color: #e1e1e1;
+	position:absolute;
+	left:50%;
+	margin-left:-160px;
+	margin-top:2em;
+	padding:0;
+	overflow: hidden;
+}
+

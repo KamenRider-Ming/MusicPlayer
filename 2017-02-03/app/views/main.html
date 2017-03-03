@@ -1,0 +1,161 @@
+  
+  <div class="music-top">
+    <img src="images/Layer1.png"/>
+  </div>
+
+  <div class="music-songl clearfix">
+    <div class="music-songl-b-bar">
+      <div class="music-songl-help fl">
+        <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+      </div>
+      <div class="music-songl-hide fr" ng-click="changeDir()">
+        <span class="glyphicon glyphicon-subtitles" aria-hidden="true"></span>
+      </div>
+    </div>
+    <div class="music-song-dir {{dirHide ? 'dirHide' : 'dirShow'}} {{songListShowOrHide || playListShowOrHide ?'dirListHide':'dirListShow'}}">
+      <div class="song-list-item song-dir-item clearfix" ng-click="showSongList()">
+        <div class="item-pic">
+
+          <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+        </div>
+        <div class="item-name fl">
+          总歌曲列表
+        </div>
+        <div class="item-ripic fr">
+          <img src="images/item-ripic.png">
+        </div>
+      </div>
+      <div class="song-play-list-item song-dir-item clearfix"  ng-click="showPlayList()">
+        <div class="item-pic">
+          <!--<img src="images/list.png">-->
+          <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+        </div>
+        <div class="item-name fl">
+          播放列表
+        </div>
+        <div class="item-ripic fr">
+          <img src="images/item-ripic.png">
+        </div>
+      </div>
+      <!--<div class="song-play-list-item song-dir-item clearfix"></div>-->
+    </div>
+    <div class="music-song-list {{songListShowOrHide ? 'music-song-show': 'music-song-hide'}}" >
+      <div class="song-list-item">
+        <div class="pos-back" ng-click="songListClose()">
+          <!--<img src="images/back.png">-->
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="song-list-item clearfix" songid="{{$index}}" ng-repeat="song in audioListData" >
+        <div class="playbtn ctrlbtn">
+          <span class="glyphicon glyphicon-play-circle" aria-hidden="true" ng-click="play($index, true)"></span>
+          <!--<img src="images/player.png" >-->
+        </div>
+        <div class="list-song-name fl">
+          <div class="song-name-font">
+            {{song.name}}
+          </div>
+        </div>
+        <div class="addbtn ctrlbtn">
+          <span class="glyphicon glyphicon-heart{{audioListData[$index].added ? ' added' : '-empty'}}" aria-hidden="true" ng-click="add($index)"></span>
+          <!--<img src="images/add.png" >-->
+        </div>
+        <div class="downbtn ctrlbtn">
+          <span class="glyphicon glyphicon-save" aria-hidden="true"  ng-click="download($index)"></span>
+          <!--<img src="images/download.png" ng-click="download($index)">-->
+        </div>
+      </div>
+    </div>
+    <div class="musicplay-song-list {{playListShowOrHide ? 'music-song-show': 'music-song-hide'}}">
+      <div class="song-list-item clearfix">
+        <div class="pos-back" ng-click="playListClose()">
+          <!--<img src="images/back.png">-->
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </div>
+      </div>
+      <div class="song-list-item clearfix" songid="{{playitem}}" ng-repeat="playitem in playList">
+        <div class="playbtn ctrlbtn">
+          <span class="glyphicon glyphicon-play-circle" aria-hidden="true" ng-click="play($index, false)"></span>
+        </div>
+        <div class="list-song-name fl">
+          <div class="song-name-font">{{audioListData[playitem].name}}</div>
+        </div>
+        <div class="removebtn ctrlbtn">
+          <span class="glyphicon glyphicon-remove-circle" aria-hidden="true" ng-click="remove($index,playitem)"></span>
+        </div>
+        <div class="downbtn ctrlbtn">
+          <span class="glyphicon glyphicon-save" aria-hidden="true"  ng-click="download($index)"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="music-sing">
+    <img src="images/song-img.png">
+  </div>
+
+  <div class="main-music-ctrl clearfix">
+    
+      <div class="song-play" ng-click="processctrl()">
+        <canvas id="song-play">
+        </canvas>
+        <div class="song-center-show" ng-click="$event.stopPropagation()">
+          <div class="play-song-singer-name">
+            
+          </div>
+          <div class="play-song-name">
+            <div class="song-name-move">
+              {{songId != -1 ? currentSong.name : ''}}
+            </div>
+          </div>
+          <div class="play-song-btn" ng-click="songId != -1 ? pause = !pause : pause=pause">
+            <img ng-src="images/{{pause ? 'pause' : 'play'}}-song.png">
+          </div>
+          <div class="play-song-time">
+              {{songId != -1 ? (currentSong.currentTime | TimeFormat) : ''}}&nbsp;{{songId != -1 ? '/' :''}}&nbsp;{{songId != -1 ? (currentSong.allTime | TimeFormat) : ''}}
+          </div>
+        </div>
+      </div>
+
+    
+
+    <div class="pre-song song-c fl" ng-click="songId != -1 ? prevSong() : null">
+      <img src="images/pre-song.png">
+    </div>
+
+
+    <div class="next-song song-c fr" ng-click="songId != -1 ? nextSong() : null">
+      <img src="images/next-song.png">
+    </div>
+  </div>
+
+
+  <div class="second-music-ctrl clearfix">
+    <div class="random-bar fl {{randomOrCycle ? 'on':'off'}}">
+      <span class="fl" ng-click="randomOrCycleOn()">on</span>
+      <span class="fr" ng-click="randomOrCycleOff()">off</span>
+      <div class="random-song">
+        <img src="images/random.png">
+      </div>
+    </div>
+    
+    
+    <div class="cycle-bar fr {{randomOrCycle ? 'off':'on'}}">
+      <span class="fl" ng-click="randomOrCycleOff()">on</span>
+      <span class="fr" ng-click="randomOrCycleOn()">off</span>
+      <div class="cycle-song">
+        <img src="images/cycle.png">
+      </div>  
+    </div>
+  </div>
+
+  <div class="music-voice">
+    <div class="music-voice-bak" ng-click = "voicectrl()">
+      <div class="music-voice-over">
+        <div class="music-voice-head"></div>
+      </div>
+    </div>
+  </div>
+
+<audio ng-src="{{songId != -1 ? audioListData[songId].musicurl : 'javascript:void(0)'}}" class="audio"></audio> 
